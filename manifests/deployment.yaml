@@ -40,11 +40,11 @@ spec:
               protocol: TCP
           resources:
             limits:
-              cpu: 1
-              memory: 1Gi
+              cpu: 0.1
+              memory: 200Mi
             requests:
-              cpu: 1
-              memory: 1Gi
+              cpu: 0.1
+              memory: 200Mi
           livenessProbe:
             failureThreshold: 3
             httpGet:
