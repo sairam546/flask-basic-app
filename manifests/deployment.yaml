@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-07
+  labels:
+    app: "07"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "07"
+  template:
+    metadata:
+      labels:
+        app: "07"
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+      containers:
+        - name: app
+          image: sairam546/flask-dummy-app:0.1
+          args:
+            - pipenv
+            - run
+            - gunicorn
+            - --workers=5
+            - -b
+            - 0.0.0.0:8000
+            - wsgi
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: APP_NAME
+              value: app-07
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 1
+              memory: 1Gi
+            requests:
+              cpu: 1
+              memory: 1Gi
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 8000
+              scheme: HTTP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 8000
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
