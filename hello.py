@@ -1,5 +1,6 @@
 from flask import Flask, escape, request
 import os
+import logging
 
 application = Flask(__name__)
 
@@ -83,6 +84,11 @@ application = Flask(__name__)
 def hello():
 	app_name = os.environ.get('APP_NAME', 'Unable to get environment Value')
 	return f'This response if from {app_name}'
+
+@application.route('/headers')
+def get_headers():
+	application.logger.info(request.headers)
+	return f'Headers {request.headers}'
 
 @application.route('/stickyness')
 def stickyness():

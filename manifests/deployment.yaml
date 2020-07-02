@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-07
+  name: dummy-app
   labels:
-    app: "07"
+    app: "dummy"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: "07"
+      app: "dummy"
   template:
     metadata:
       labels:
-        app: "07"
+        app: "dummy"
     spec:
       nodeSelector:
         beta.kubernetes.io/os: linux
@@ -33,7 +33,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: APP_NAME
-              value: app-07
+              value: dummy-app
           ports:
             - name: http
               containerPort: 8000
