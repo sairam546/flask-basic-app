@@ -3,4 +3,4 @@ RUN pip install pipenv
 WORKDIR /work
 ADD . .
 RUN pipenv sync
-CMD ["pipenv", "run", "gunicorn", "-b", "0.0.0.0:8000", "wsgi"]
+CMD ["pipenv", "run", "gunicorn", "-b", "0.0.0.0:8000", "--log-level", "info", "--access-logfile", "-", "wsgi"]
