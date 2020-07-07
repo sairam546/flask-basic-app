@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-dummy-app
+  name: flask-basic-app
   labels:
-    app: "dummy"
+    app: "basic"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: "dummy"
+      app: "basic"
   template:
     metadata:
       labels:
-        app: "dummy"
+        app: "basic"
     spec:
       nodeSelector:
         beta.kubernetes.io/os: linux
       containers:
         - name: app
-          image: sairam546/flask-dummy-app:0.7
+          image: sairam546/flask-basic-app:0.7
           args:
             - pipenv
             - run
@@ -37,7 +37,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: APP_NAME
-              value: dummy-app
+              value: basic-app
           ports:
             - name: http
               containerPort: 8000
@@ -69,12 +69,12 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
-  name: flask-dummy-app
+  name: flask-basic-app
   labels:
-    app: "dummy"
+    app: "basic"
 spec:
   selector:
-      app: "dummy"
+      app: "basic"
   ports:
   - name: http
     protocol: TCP
